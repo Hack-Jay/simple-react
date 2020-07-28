@@ -6,6 +6,7 @@ class MyComponent extends Component {
       <div>
         <span>component </span> &nbsp; cool
         {this.children}
+		{this.props.name}
       </div>
     );
   }

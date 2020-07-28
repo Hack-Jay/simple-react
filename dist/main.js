@@ -121,6 +121,14 @@ var ElementWrapper = /*#__PURE__*/function () {
   _createClass(ElementWrapper, [{
     key: "setAttribute",
     value: function setAttribute(name, value) {
+      if (name.match(/^on([\s\S]+)$/)) {
+        var eventName = RegExp.$1.replace(/^[\s\S]/, function (s) {
+          return s.toLowerCase();
+        });
+        this.root.addEventListener(eventName, value);
+      }
+
+      if (name === "className") name = "class";
       this.root.setAttribute(name, value);
     }
   }, {
@@ -160,11 +168,17 @@ var Component = /*#__PURE__*/function () {
     _classCallCheck(this, Component);
 
     this.children = [];
+    this.props = Object.create(null);
   }
 
   _createClass(Component, [{
     key: "setAttribute",
     value: function setAttribute(name, value) {
+      if (name.match(/^on([\s\S]+)$/)) {
+        console.log(RefExp.$1);
+      }
+
+      this.props[name] = value;
       this[name] = value;
     }
   }, {
@@ -176,6 +190,7 @@ var Component = /*#__PURE__*/function () {
   }, {
     key: "appendChild",
     value: function appendChild(vchild) {
+      console.log("vchild", vchild);
       this.children.push(vchild);
     }
   }]);
@@ -200,7 +215,7 @@ var ToyReact = {
           var child = _step.value;
 
           if (_typeof(child) === "object" && child instanceof Array) {
-            console.log("child", child, 'children', children);
+            console.log("child", child, "children", children);
             insertChildren(child);
           } else {
             // 不是Component，TextWrapper, TextWrapper的话就直接渲染，比如{true}
@@ -278,7 +293,7 @@ var MyComponent = /*#__PURE__*/function (_Component) {
   _createClass(MyComponent, [{
     key: "render",
     value: function render() {
-      return _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("div", null, _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("span", null, "component "), " \xA0 cool", this.children);
+      return _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("div", null, _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("span", null, "component "), " \xA0 cool", this.children, this.props.name);
     }
   }]);
 
