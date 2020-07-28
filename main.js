@@ -11,9 +11,20 @@ class MyComponent extends Component {
   }
 }
 
+class MyComponent1 extends Component {
+  render() {
+    return (
+      <div>
+        <span>component1 </span> &nbsp; cool
+      </div>
+    );
+  }
+}
+
 let a = (
   <MyComponent name="a" id="my">
     <div>123</div>
+	<MyComponent1 />
   </MyComponent>
 );
 

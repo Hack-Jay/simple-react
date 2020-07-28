@@ -148,7 +148,6 @@ var TextWrapper = /*#__PURE__*/function () {
   _createClass(TextWrapper, [{
     key: "mountTo",
     value: function mountTo(parent) {
-      console.log(3);
       parent.appendChild(this.root);
     }
   }]);
@@ -193,8 +192,6 @@ var ToyReact = {
     }
 
     var insertChildren = function insertChildren(children) {
-      console.log("children", children);
-
       var _iterator = _createForOfIteratorHelper(children),
           _step;
 
@@ -203,8 +200,10 @@ var ToyReact = {
           var child = _step.value;
 
           if (_typeof(child) === "object" && child instanceof Array) {
+            console.log("child", child, 'children', children);
             insertChildren(child);
           } else {
+            // 不是Component，TextWrapper, TextWrapper的话就直接渲染，比如{true}
             if (!(child instanceof Component) && !(child instanceof ElementWrapper && !(child instanceof TextWrapper))) child = String(child);
             if (typeof child === "string") child = new TextWrapper(child);
             element.appendChild(child);
@@ -286,10 +285,31 @@ var MyComponent = /*#__PURE__*/function (_Component) {
   return MyComponent;
 }(_ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
+var MyComponent1 = /*#__PURE__*/function (_Component2) {
+  _inherits(MyComponent1, _Component2);
+
+  var _super2 = _createSuper(MyComponent1);
+
+  function MyComponent1() {
+    _classCallCheck(this, MyComponent1);
+
+    return _super2.apply(this, arguments);
+  }
+
+  _createClass(MyComponent1, [{
+    key: "render",
+    value: function render() {
+      return _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("div", null, _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("span", null, "component1 "), " \xA0 cool");
+    }
+  }]);
+
+  return MyComponent1;
+}(_ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
 var a = _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement(MyComponent, {
   name: "a",
   id: "my"
-}, _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("div", null, "123"));
+}, _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("div", null, "123"), _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement(MyComponent1, null));
 _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].render(a, document.body); // var b = ToyReact.createElement(
 //  "div", null,
 //  ToyReact.createElement("span", null, "1"),

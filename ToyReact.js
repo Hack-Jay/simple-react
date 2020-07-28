@@ -18,8 +18,6 @@ class TextWrapper {
     this.root = document.createTextNode(content);
   }
   mountTo(parent) {
-    console.log(3);
-
     parent.appendChild(this.root);
   }
 }
@@ -54,11 +52,12 @@ export let ToyReact = {
     }
 
     let insertChildren = (children) => {
-      console.log("children", children);
       for (let child of children) {
         if (typeof child === "object" && child instanceof Array) {
+          console.log("child", child, 'children', children);
           insertChildren(child);
         } else {
+          // 不是Component，TextWrapper, TextWrapper的话就直接渲染，比如{true}
           if (
             !(child instanceof Component) &&
             !(
