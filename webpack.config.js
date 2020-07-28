@@ -3,6 +3,7 @@ module.exports = {
 		main: "./main.js",
 	},
 	mode: "development",
+	devtool: 'cheap-module-source-map',
 	optimization: {
 		minimize: false,
 	},

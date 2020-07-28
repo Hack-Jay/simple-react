@@ -1,19 +1,23 @@
-// import { ToyReact } from "./ToyReact.js";
+import { ToyReact, Component } from "./ToyReact.js";
 
-class MyComponent {}
+class MyComponent extends Component {
+  render() {
+    return (
+      <div>
+        <span>component </span> &nbsp; cool
+        {this.children}
+      </div>
+    );
+  }
+}
 
-let b = (
-	<div>
-		<span>1</span>
-		<span>2</span>
-		<span class="3">3 hello world</span>
-	</div>
+let a = (
+  <MyComponent name="a" id="my">
+    <div>123</div>
+  </MyComponent>
 );
 
-document.body.appendChild(b);
-console.log("b", b);
-
-ReactDom.render(b, document.body);
+ToyReact.render(a, document.body);
 
 // var b = ToyReact.createElement(
 //  "div", null,
