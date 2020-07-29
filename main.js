@@ -1,12 +1,14 @@
 import { ToyReact, Component } from "./ToyReact.js";
 
+// this.children 在createElement解析的时候是个数组
 class MyComponent extends Component {
   render() {
+    console.log("this.children", this.children);
     return (
-      <div>
+      <div className="MyComponent">
         <span>component </span> &nbsp; cool
         {this.children}
-		{this.props.name}
+        {this.props.name}
       </div>
     );
   }
@@ -15,8 +17,8 @@ class MyComponent extends Component {
 class MyComponent1 extends Component {
   render() {
     return (
-      <div>
-        <span>component1 </span> &nbsp; cool
+      <div className="MyComponent1">
+        <span>component1 </span> &nbsp; cool2
       </div>
     );
   }
@@ -24,17 +26,11 @@ class MyComponent1 extends Component {
 
 let a = (
   <MyComponent name="a" id="my">
-    <div>123</div>
-	<MyComponent1 />
+    <div className="=123">123</div>
+    <MyComponent1 />
   </MyComponent>
 );
 
-ToyReact.render(a, document.body);
+console.log("a", a);
 
-// var b = ToyReact.createElement(
-//  "div", null,
-//  ToyReact.createElement("span", null, "1"),
-//  ToyReact.createElement("span", null, "2"),
-//  ToyReact.createElement("span", {
-//     "class": "3"
-//   }, "3 hello world"));
+ToyReact.render(a, document.body);
