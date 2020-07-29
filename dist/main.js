@@ -190,7 +190,7 @@ var Component = /*#__PURE__*/function () {
   }, {
     key: "appendChild",
     value: function appendChild(vchild) {
-      console.log("vchild", vchild);
+      // console.log("vchild", vchild);
       this.children.push(vchild);
     }
   }]);
@@ -199,13 +199,12 @@ var Component = /*#__PURE__*/function () {
 }();
 var ToyReact = {
   createElement: function createElement(type, attr) {
-    // console.log('type', type, 'attr', attr, 'children', children);
     var element;
     if (typeof type === "string") element = new ElementWrapper(type);else element = new type();
 
     for (var name in attr) {
       element.setAttribute(name, attr[name]);
-    } // Comp中 子组件 this.children 为数组，遍历后插入
+    } // Comp中 子组件 this.children 为数组，需要遍历, 之后继续调用createElement
 
 
     var insertChildren = function insertChildren(children) {
@@ -222,6 +221,7 @@ var ToyReact = {
             if (!(child instanceof Component) && !(child instanceof ElementWrapper && !(child instanceof TextWrapper))) child = String(child);
             if (typeof child === "string") child = new TextWrapper(child);
             element.appendChild(child);
+            console.log('element', element);
           }
         }
       } catch (err) {
@@ -294,9 +294,9 @@ var MyComponent = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       console.log("this.children", this.children);
-      return _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("div", {
+      return ToyReact.createElement("div", {
         className: "MyComponent"
-      }, _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("span", null, "component "), " \xA0 cool", this.children, this.props.name);
+      }, ToyReact.createElement("span", null, "component "), " \xA0 cool", this.children, this.props.name);
     }
   }]);
 
@@ -317,23 +317,28 @@ var MyComponent1 = /*#__PURE__*/function (_Component2) {
   _createClass(MyComponent1, [{
     key: "render",
     value: function render() {
-      return _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("div", {
+      return ToyReact.createElement("div", {
         className: "MyComponent1"
-      }, _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("span", null, "component1 "), " \xA0 cool2");
+      }, ToyReact.createElement("span", null, "component1 "), " \xA0 cool2");
     }
   }]);
 
   return MyComponent1;
 }(_ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-var a = _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement(MyComponent, {
+var a = ToyReact.createElement(MyComponent, {
   name: "a",
   id: "my"
-}, _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement("div", {
+}, ToyReact.createElement("div", {
   className: "=123"
-}, "123"), _ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].createElement(MyComponent1, null));
+}, "123"), ToyReact.createElement(MyComponent1, null));
 console.log("a", a);
-_ToyReact_js__WEBPACK_IMPORTED_MODULE_0__["ToyReact"].render(a, document.body);
+ToyReact.render(a, document.body); // var a = ToyReact.createElement(MyComponent, {
+// 	name: "a",
+// 	id: "my"
+//   }, ToyReact.createElement("div", {
+// 	className: "=123"
+//   }, "123"), ToyReact.createElement(MyComponent1, null));
 
 /***/ })
 

@@ -47,14 +47,13 @@ export class Component {
   }
 
   appendChild(vchild) {
-    console.log("vchild", vchild);
+    // console.log("vchild", vchild);
     this.children.push(vchild);
   }
 }
 
 export let ToyReact = {
   createElement(type, attr, ...children) {
-    // console.log('type', type, 'attr', attr, 'children', children);
     let element;
     if (typeof type === "string") element = new ElementWrapper(type);
     else element = new type();
@@ -63,7 +62,7 @@ export let ToyReact = {
       element.setAttribute(name, attr[name]);
     }
 
-    // Comp中 子组件 this.children 为数组，遍历后插入
+    // Comp中 子组件 this.children 为数组，需要遍历, 之后继续调用createElement
     let insertChildren = (children) => {
       for (let child of children) {
         if (typeof child === "object" && child instanceof Array) {
@@ -78,6 +77,7 @@ export let ToyReact = {
             child = String(child);
           if (typeof child === "string") child = new TextWrapper(child);
           element.appendChild(child);
+          console.log('element', element)
         }
       }
     };
